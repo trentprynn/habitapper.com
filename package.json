@@ -1,0 +1,35 @@
+{
+    "name": "habitapper.com",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "vercel-build": "prisma generate && prisma migrate deploy && next build",
+        "start": "next start",
+        "lint": "next lint",
+        "pretty": "prettier --ignore-path .gitignore --write \"./**/*.{js,ts,jsx,tsx,json,html,scss,css,yaml}\""
+    },
+    "dependencies": {
+        "@next-auth/prisma-adapter": "^0.5.3",
+        "@prisma/client": "^2.30.0",
+        "bootstrap": "5.1.0",
+        "moment": "^2.29.1",
+        "next": "11.1.0",
+        "next-auth": "^3.29.0",
+        "prettier": "^2.3.2",
+        "react": "17.0.2",
+        "react-bootstrap": "^2.0.0-beta.5",
+        "react-dom": "17.0.2",
+        "safe-json-stringify": "^1.2.0"
+    },
+    "devDependencies": {
+        "@types/node": "14.14.31",
+        "@types/react": "^17.0.19",
+        "@types/safe-json-stringify": "^1.1.2",
+        "eslint": "7.32.0",
+        "eslint-config-next": "11.1.0",
+        "prisma": "^2.30.0",
+        "typescript": "4.3.5"
+    }
+}
