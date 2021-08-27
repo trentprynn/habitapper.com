@@ -29,10 +29,8 @@ Repository for the source code of HabiTapper.com
 6. run `yarn dev`
     - runs application with hot reloading enabled
 
-
 ## Useful commands during local development
 1. `yarn prisma studio`
     - runs a local website at `localhost:5555` that allows for easy viewing and interaction with the local postgres database the application uses
 2. `curl -I --request POST --url "http://localhost:3000/api/tasks/processExpiredHabits" --header "Authorization: Bearer YOUR_APP_KEY_HERE"`
-    - sends a HTTP POST request to the API route that resets habit streaks that are older then 24 hours. In production you should setup automatic pinging of this end point so user's habits are reset after not being continued for 24+ hours.
-
+    - sends a HTTP POST request to the API route that resets habit streaks that are older then 24 hours. In production you should setup automatic pinging of this end point so user's habit streaks are reset after not being.

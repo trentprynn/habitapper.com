@@ -1,15 +1,14 @@
 name: Cron Jobs
 on:
-  schedule:
-    - cron: '*/5 * * * *'
-  workflow_dispatch:
+    schedule:
+        - cron: '*/5 * * * *'
+    workflow_dispatch:
 jobs:
-  process-expired-habits:
-    runs-on: ubuntu-latest
-    environment: production
-    steps:
-      - name: POST Request
-        run: |
-          curl -I --request POST \
-          --url "https://www.habitapper.com/api/tasks/processExpiredHabits" \
-          --header "Authorization: Bearer ${{ secrets.APP_KEY }}"
+    process-expired-habits:
+        runs-on: ubuntu-latest
+        steps:
+            - name: POST Request
+              run: |
+                  curl -I --request POST \
+                  --url "https://www.habitapper.com/api/tasks/processExpiredHabits" \
+                  --header "Authorization: Bearer ${{ secrets.APP_KEY }}"

@@ -8,6 +8,7 @@ import { Habit } from '@prisma/client'
 import safeJsonStringify from 'safe-json-stringify'
 import { useRouter } from 'next/router'
 import { Table, Button } from 'react-bootstrap'
+import Layout from '../../components/layout/layout'
 
 export default function Home({
     session,
@@ -21,7 +22,7 @@ export default function Home({
     const [newHabitName, setNewHabitName] = useState('')
 
     return (
-        <Fragment>
+        <Layout>
             <p>Signed in as {session.user.email}</p>
             <Button onClick={() => signOut()}>Sign out</Button>
             <Table striped bordered hover>
@@ -114,7 +115,7 @@ export default function Home({
                     </tr>
                 </tbody>
             </Table>
-        </Fragment>
+        </Layout>
     )
 
     function UTCDateOlderThan24HoursOrNull(utcDate: any): boolean {

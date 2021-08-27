@@ -2,13 +2,14 @@ import { signIn, getSession } from 'next-auth/client'
 import { GetServerSideProps } from 'next'
 import { InferGetServerSidePropsType } from 'next'
 import { Button } from 'react-bootstrap'
+import Layout from '../components/layout/layout'
 
 export default function Home({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (
-        <div>
+        <Layout>
             <p>Not signed in</p>
             <Button onClick={() => signIn()}>Sign in</Button>
-        </div>
+        </Layout>
     )
 }
 
