@@ -2,6 +2,7 @@ import { signIn, getSession } from 'next-auth/client'
 import { GetServerSideProps } from 'next'
 import { InferGetServerSidePropsType } from 'next'
 import { Button } from 'react-bootstrap'
+import { Fragment } from 'react'
 import Layout from '../components/layout/layout'
 
 export default function Home({}: InferGetServerSidePropsType<typeof getServerSideProps>) {

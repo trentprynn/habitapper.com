@@ -57,7 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
                 // ensure streak hasn't been claimed within
                 // 24 hours
-                if (!UTCDateOlderThan24HoursOrNull(currentHabit.streakContinuedAt)) {
+                if (!dateOlderThen16HoursOrNull(currentHabit.streakContinuedAt)) {
                     res.status(400).end(`Habit has been continued within last 24 hours.`)
                     return
                 }
@@ -104,12 +104,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     }
 }
 
-function UTCDateOlderThan24HoursOrNull(utcDate: Date | null): boolean {
-    if (utcDate == null) {
+function dateOlderThen16HoursOrNull(date: Date | null): boolean {
+    if (date == null) {
         return true
     }
 
-    if (moment().diff(moment(utcDate), 'hours') > 24) {
+    if (moment().diff(moment(date), 'hours') > 16) {
         return true
     }
 

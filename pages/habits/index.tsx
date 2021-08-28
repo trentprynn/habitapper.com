@@ -55,7 +55,7 @@ export default function Home({
                                     </Fragment>
                                 </td>
                                 <Fragment>
-                                    {UTCDateOlderThan24HoursOrNull(habit.streakContinuedAt) ? (
+                                    {dateOlderThen16HoursOrNull(habit.streakContinuedAt) ? (
                                         <Fragment>
                                             <td>Available</td>
                                             <td>
@@ -118,12 +118,12 @@ export default function Home({
         </Layout>
     )
 
-    function UTCDateOlderThan24HoursOrNull(utcDate: any): boolean {
-        if (utcDate == null) {
+    function dateOlderThen16HoursOrNull(date: Date | null): boolean {
+        if (date == null) {
             return true
         }
 
-        if (moment().diff(moment(utcDate), 'hours') > 24) {
+        if (moment().diff(moment(date), 'hours') > 16) {
             return true
         }
 

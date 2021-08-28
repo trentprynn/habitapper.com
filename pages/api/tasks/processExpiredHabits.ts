@@ -1,3 +1,4 @@
+import moment from 'moment'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from '../../../prisma/client'
 
@@ -34,18 +35,16 @@ export async function processExpiredHabits(): Promise<void> {
     // we use 48 hours here because if I continued
     // my habit streak at 10AM my habit streak would be
     // `satisfied` until 10AM the following day when I could
-    // continue my habit streak again.
+    // would continue my habit streak again.
 
     // 24 hours after that point though my habit would have
     // not been continued for a full day and my streak should go
     // back to zero.
-    const nowUTC = new Date(new Date().toUTCString())
-    const nowUTCMinus48Hours = new Date(nowUTC.getTime() - 48 * 60 * 60 * 1000)
-
+    const twoDaysAgo = moment().subtract(48, 'hours').toDate()
     var result = await prisma.habit.updateMany({
         where: {
             streakContinuedAt: {
-                lt: nowUTCMinus48Hours,
+                lt: twoDaysAgo,
             },
         },
         data: {
