@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { FaGithub, FaTwitter, FaInstagram } from 'react-icons/fa'
+import { IoLogoVenmo } from 'react-icons/io5'
 
 export default function Layout({ children, title = 'HabiTapper' }: any) {
     return (
@@ -17,6 +18,9 @@ export default function Layout({ children, title = 'HabiTapper' }: any) {
                 </a>
                 <a href="https://www.instagram.com/trentprynn/" className="p-1">
                     <FaInstagram />
+                </a>
+                <a href="https://account.venmo.com/u/TrentPrynn" className="p-1">
+                    <IoLogoVenmo />
                 </a>
             </footer>
         </div>
