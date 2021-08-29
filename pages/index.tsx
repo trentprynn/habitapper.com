@@ -7,8 +7,11 @@ import Layout from '../components/layout/layout'
 export default function Home({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (
         <Layout>
-            <p>Not signed in</p>
-            <Button onClick={() => signIn()}>Sign in</Button>
+            <div className="d-flex flex-column min-vh-100 justify-content-center align-items-center">
+                <h1>HabiTapper</h1>
+                <p>Feedback loop habit tracking.</p>
+                <Button onClick={() => signIn()}>Sign in</Button>
+            </div>
         </Layout>
     )
 }
