@@ -49,7 +49,7 @@ export default function Home({
                                     )}
                                     <Button
                                         variant="danger"
-                                        className="mx-1"
+                                        className="m-1"
                                         onClick={async () => deleteHabit(habit.habitId)}
                                     >
                                         Delete
@@ -66,7 +66,7 @@ export default function Home({
                                             hours ago
                                         </small>
                                     ) : (
-                                        <small>not claimed yet</small>
+                                        <small>habit not claimed yet</small>
                                     )}
                                 </Card.Footer>
                             </Card>
@@ -89,13 +89,14 @@ export default function Home({
                                 </Card.Text>
                                 <Button
                                     variant="primary"
+                                    className="m-1"
                                     onClick={async () => addHabit(newHabitName)}
                                 >
                                     Add
                                 </Button>
                             </Card.Body>
                             <Card.Footer>
-                                <small>not claimed yet</small>
+                                <small>habit not claimed yet</small>
                             </Card.Footer>
                         </Card>
                     </Col>
