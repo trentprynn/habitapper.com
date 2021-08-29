@@ -10,5 +10,5 @@ jobs:
             - name: POST Request
               run: |
                   curl -I --request POST \
-                  --url "https://www.habitapper.com/api/tasks/processExpiredHabits" \
+                  --url "https://habitapper.com/api/tasks/processExpiredHabits" \
                   --header "Authorization: Bearer ${{ secrets.APP_KEY }}"
