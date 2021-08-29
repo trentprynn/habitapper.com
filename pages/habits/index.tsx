@@ -10,10 +10,7 @@ import { useRouter } from 'next/router'
 import { Button, Card, Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap'
 import Layout from '../../components/layout/layout'
 
-export default function Home({
-    session,
-    habits,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home({ session, habits }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const router = useRouter()
     const refreshData = () => {
         router.replace(router.asPath)
@@ -58,12 +55,8 @@ export default function Home({
                                 <Card.Footer>
                                     {habit.streakContinuedAt ? (
                                         <small>
-                                            last claimed{' '}
-                                            {moment().diff(
-                                                moment(habit.streakContinuedAt),
-                                                'hours'
-                                            )}{' '}
-                                            hours ago
+                                            last claimed {moment().diff(moment(habit.streakContinuedAt), 'hours')} hours
+                                            ago
                                         </small>
                                     ) : (
                                         <small>habit not claimed yet</small>
@@ -87,11 +80,7 @@ export default function Home({
                                 <Card.Text>
                                     <b>Streak:</b> 0
                                 </Card.Text>
-                                <Button
-                                    variant="primary"
-                                    className="m-1"
-                                    onClick={async () => addHabit(newHabitName)}
-                                >
+                                <Button variant="primary" className="m-1" onClick={async () => addHabit(newHabitName)}>
                                     Add
                                 </Button>
                             </Card.Body>
