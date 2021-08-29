@@ -58,7 +58,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 // ensure streak hasn't been claimed within
                 // 24 hours
                 if (!dateOlderThen16HoursOrNull(currentHabit.streakContinuedAt)) {
-                    res.status(400).end(`Habit has been continued within last 24 hours.`)
+                    res.status(400).end(`Habit has been continued within the last 16 hours.`)
                     return
                 }
 
@@ -109,7 +109,7 @@ function dateOlderThen16HoursOrNull(date: Date | null): boolean {
         return true
     }
 
-    if (moment().diff(moment(date), 'hours') > 16) {
+    if (moment().diff(moment(date), 'hours') >= 16) {
         return true
     }
 

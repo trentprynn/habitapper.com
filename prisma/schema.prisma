@@ -60,7 +60,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
-  Habit         Habit[]
+  habits        Habit[]
 }
 
 model VerificationRequest {

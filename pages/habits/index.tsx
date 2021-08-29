@@ -7,7 +7,7 @@ import { getHabitsForUser } from '../api/habits'
 import { Habit } from '@prisma/client'
 import safeJsonStringify from 'safe-json-stringify'
 import { useRouter } from 'next/router'
-import { Table, Button } from 'react-bootstrap'
+import { Button, Card, Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap'
 import Layout from '../../components/layout/layout'
 
 export default function Home({
@@ -25,96 +25,82 @@ export default function Home({
         <Layout>
             <p>Signed in as {session.user.email}</p>
             <Button onClick={() => signOut()}>Sign out</Button>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Streak</th>
-                        <th>Last Claimed</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {habits &&
-                        habits.map((habit: Habit) => (
-                            <tr key={habit.habitId}>
-                                <td>{habit.name}</td>
-                                <td>{habit.streak}</td>
-                                <td>
-                                    <Fragment>
-                                        {habit.streakContinuedAt == null ? (
-                                            <div>N/A</div>
-                                        ) : (
-                                            <div>
-                                                {moment(habit.streakContinuedAt).format(
-                                                    'M/D/Y h:m a'
-                                                )}
-                                            </div>
-                                        )}
-                                    </Fragment>
-                                </td>
-                                <Fragment>
+            <Container className="mt-3">
+                <Row xs={2} md={3}>
+                    {habits.map((habit: Habit) => (
+                        <Col className="pt-3" key={habit.habitId}>
+                            <Card className="text-center h-100">
+                                <Card.Body>
+                                    <Card.Title>{habit.name}</Card.Title>
+                                    <Card.Text>
+                                        <b>Streak:</b> {habit.streak}
+                                    </Card.Text>
                                     {dateOlderThen16HoursOrNull(habit.streakContinuedAt) ? (
-                                        <Fragment>
-                                            <td>Available</td>
-                                            <td>
-                                                <Button
-                                                    variant="success"
-                                                    onClick={async () =>
-                                                        continueHabitStreak(habit.habitId)
-                                                    }
-                                                >
-                                                    Claim
-                                                </Button>
-                                                <Button
-                                                    variant="danger"
-                                                    className="mx-1"
-                                                    onClick={async () => deleteHabit(habit.habitId)}
-                                                >
-                                                    Delete
-                                                </Button>
-                                            </td>
-                                        </Fragment>
+                                        <Button
+                                            variant="success"
+                                            onClick={async () => continueHabitStreak(habit.habitId)}
+                                        >
+                                            Claim
+                                        </Button>
                                     ) : (
-                                        <Fragment>
-                                            <td>Not Available</td>
-                                            <td>
-                                                <Button variant="secondary" disabled>
-                                                    Claim
-                                                </Button>
-                                                <Button
-                                                    variant="danger"
-                                                    className="mx-1"
-                                                    onClick={async () => deleteHabit(habit.habitId)}
-                                                >
-                                                    Delete
-                                                </Button>
-                                            </td>
-                                        </Fragment>
+                                        <Button variant="secondary" disabled>
+                                            Claim
+                                        </Button>
                                     )}
-                                </Fragment>
-                            </tr>
-                        ))}
-                    <tr>
-                        <td>
-                            <input
-                                type="text"
-                                value={newHabitName}
-                                onChange={(e) => setNewHabitName(e.target.value)}
-                            ></input>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>
-                            <Button variant="primary" onClick={async () => addHabit(newHabitName)}>
-                                Add
-                            </Button>
-                        </td>
-                    </tr>
-                </tbody>
-            </Table>
+                                    <Button
+                                        variant="danger"
+                                        className="mx-1"
+                                        onClick={async () => deleteHabit(habit.habitId)}
+                                    >
+                                        Delete
+                                    </Button>
+                                </Card.Body>
+                                <Card.Footer>
+                                    {habit.streakContinuedAt ? (
+                                        <small>
+                                            last claimed{' '}
+                                            {moment().diff(
+                                                moment(habit.streakContinuedAt),
+                                                'hours'
+                                            )}{' '}
+                                            hours ago
+                                        </small>
+                                    ) : (
+                                        <small>not claimed yet</small>
+                                    )}
+                                </Card.Footer>
+                            </Card>
+                        </Col>
+                    ))}
+                    <Col className="pt-3">
+                        <Card className="text-center h-100">
+                            <Card.Body>
+                                <Card.Title>
+                                    <InputGroup size="sm" className="mb-3">
+                                        <FormControl
+                                            value={newHabitName}
+                                            onChange={(e) => setNewHabitName(e.target.value)}
+                                        />
+                                    </InputGroup>
+                                    <InputGroup></InputGroup>
+                                </Card.Title>
+                                <Card.Text>
+                                    <b>Streak:</b> 0
+                                </Card.Text>
+                                <Button
+                                    variant="primary"
+                                    onClick={async () => addHabit(newHabitName)}
+                                >
+                                    Add
+                                </Button>
+                            </Card.Body>
+                            <Card.Footer>
+                                <small>not claimed yet</small>
+                            </Card.Footer>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
         </Layout>
     )
 
@@ -123,7 +109,7 @@ export default function Home({
             return true
         }
 
-        if (moment().diff(moment(date), 'hours') > 16) {
+        if (moment().diff(moment(date), 'hours') >= 16) {
             return true
         }
 
