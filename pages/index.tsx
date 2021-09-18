@@ -1,5 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { getSession, signIn } from 'next-auth/client'
+import { getSession, signIn } from 'next-auth/react'
 import { Button } from 'react-bootstrap'
 
 import Layout from '../components/layout/layout'

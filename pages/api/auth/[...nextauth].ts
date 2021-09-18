@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth'
-import Providers from 'next-auth/providers'
 
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
+import Auth0Provider from 'next-auth/providers/auth0'
 
 import prisma from '../../../prisma/client'
 
@@ -20,21 +20,15 @@ declare module 'next-auth' {
 
 export default NextAuth({
     providers: [
-        Providers.Email({
-            server: {
-                host: process.env.EMAIL_HOST,
-                port: process.env.EMAIL_PORT,
-                auth: {
-                    user: process.env.EMAIL_USERNAME,
-                    pass: process.env.EMAIL_PASSWORD,
-                },
-            },
-            from: process.env.EMAIL_FROM,
+        Auth0Provider({
+            clientId: process.env.AUTH0_CLIENT_ID || '',
+            clientSecret: process.env.AUTH0_CLIENT_SECRET || '',
+            issuer: process.env.AUTH0_ISSUER,
         }),
     ],
     adapter: PrismaAdapter(prisma),
     callbacks: {
-        session: async (session, user) => {
+        session: async ({ session, token, user }) => {
             session.user.id = user.id as string
             return Promise.resolve(session)
         },

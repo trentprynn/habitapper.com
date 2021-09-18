@@ -10,14 +10,18 @@ Repository for the source code of HabiTapper.com
 3. use `docker` to spin up a postgres instance for our local application to connect to
     - `docker run --name habitapper-db -e POSTGRES_USER=habitapper_user -e POSTGRES_PASSWORD=habitapper_pass -e POSTGRES_DB=habitapper -p 5432:5432 -v habitapper_data:/var/lib/postgresql/data -d postgres`
 3. create a `.env` file that defines the following variables
-    - email settings (neccessary, used for magic link user authentication)
+    - auth0 settings
+        - `AUTH0_CLIENT_ID`
+        - `AUTH0_CLIENT_SECRET`
+        - `AUTH0_ISSUER`
+    - email settings
         - `EMAIL_HOST`
         - `EMAIL_PORT`
         - `EMAIL_USERNAME`
         - `EMAIL_PASSWORD`
         - `EMAIL_FROM`
     - access key for HTTP request authorization that run CRON like actions (example: resetting user streak counts that have not been continued within 24 hours)
-        - `APP_KEY`
+        - `APP_KEY=local_key`
     - next auth redirect url
         - `NEXTAUTH_URL=http://localhost:3000`
     - prisma (JavaScript ORM) db connection string
@@ -32,7 +36,7 @@ Repository for the source code of HabiTapper.com
 ## Useful commands during local development
 1. `yarn prisma studio`
     - runs a local website at `localhost:5555` that allows for easy viewing and interaction with the local postgres database the application is using
-2. `curl -I --request POST --url "http://localhost:3000/api/tasks/processExpiredHabits" --header "Authorization: Bearer YOUR_APP_KEY_HERE"`
+2. `curl -I --request POST --url "http://localhost:3000/api/tasks/processExpiredHabits" --header "Authorization: Bearer local_key"`
     - sends a HTTP POST request to the API route that resets habit streaks that are older then 24 hours. In production you should setup automatic pinging of this end point so user's habit streaks are reset after not being.
 3. `docker run --name pgadmin4 -e PGADMIN_DEFAULT_EMAIL=test@example.com -e PGADMIN_DEFAULT_PASSWORD=your_password -e PGADMIN_LISTEN_PORT=4000 -p 4000:4000 -v pgadmin_data:/var/lib/pgadmin -d dpage/pgadmin4`
     - runs a pgadmin4 container that you can configure to connect to your local (or remote) postgres database, useful if you want to look into your database more deeply then `yarn prisma studio` offers

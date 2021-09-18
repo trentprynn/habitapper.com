@@ -1,9 +1,9 @@
 import moment from 'moment'
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { getSession, signOut } from 'next-auth/client'
+import { getSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { Button, Card, Col, Container, FormControl, InputGroup, Row } from 'react-bootstrap'
+import { Button, Card, Col, Container, Dropdown, DropdownButton, FormControl, InputGroup, Row } from 'react-bootstrap'
 import safeJsonStringify from 'safe-json-stringify'
 
 import { Habit } from '@prisma/client'
@@ -27,8 +27,22 @@ export default function Home({ session, habits }: InferGetServerSidePropsType<ty
                 <Row xs={2} md={3}>
                     {habits.map((habit: Habit) => (
                         <Col className="pt-3" key={habit.habitId}>
-                            <Card className="text-center h-100">
-                                <Card.Body>
+                            <Card className="h-100">
+                                <Card.Header className="text-end">
+                                    <Dropdown>
+                                        <Dropdown.Toggle
+                                            id="habit-edit-menu"
+                                            variant="secondary"
+                                            size="sm"
+                                        ></Dropdown.Toggle>
+                                        <Dropdown.Menu renderOnMount={true}>
+                                            <Dropdown.Item onClick={async () => deleteHabit(habit.habitId)}>
+                                                Delete
+                                            </Dropdown.Item>
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </Card.Header>
+                                <Card.Body className="text-center">
                                     <Card.Title>{habit.name}</Card.Title>
                                     <Card.Text>
                                         <b>Streak:</b> {habit.streak}
@@ -45,19 +59,11 @@ export default function Home({ session, habits }: InferGetServerSidePropsType<ty
                                             Claim
                                         </Button>
                                     )}
-                                    <Button
-                                        variant="danger"
-                                        className="m-1"
-                                        onClick={async () => deleteHabit(habit.habitId)}
-                                    >
-                                        Delete
-                                    </Button>
                                 </Card.Body>
-                                <Card.Footer>
+                                <Card.Footer className="text-center">
                                     {habit.streakContinuedAt ? (
                                         <small>
-                                            last claimed {moment().diff(moment(habit.streakContinuedAt), 'hours')} hours
-                                            ago
+                                            last claimed {moment(habit.streakContinuedAt).calendar().toLowerCase()}
                                         </small>
                                     ) : (
                                         <small>habit not claimed yet</small>
@@ -86,7 +92,7 @@ export default function Home({ session, habits }: InferGetServerSidePropsType<ty
                                 </Button>
                             </Card.Body>
                             <Card.Footer>
-                                <small>habit not claimed yet</small>
+                                <small>add a habit to start tracking!</small>
                             </Card.Footer>
                         </Card>
                     </Col>
