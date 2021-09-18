@@ -8,8 +8,8 @@ import safeJsonStringify from 'safe-json-stringify'
 
 import { Habit } from '@prisma/client'
 
-import Layout from '../../components/layout/layout'
-import { getHabitsForUser } from '../api/habits'
+import Layout from 'components/layout/layout'
+import { getHabitsForUser } from 'pages/api/habits'
 
 export default function Home({ session, habits }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const router = useRouter()
