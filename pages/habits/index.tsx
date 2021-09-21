@@ -3,8 +3,8 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import { getSession, signOut } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { Button, Card, Col, Container, Dropdown, DropdownButton, FormControl, InputGroup, Row } from 'react-bootstrap'
-import safeJsonStringify from 'safe-json-stringify'
+import { Button, Card, Col, Container, Dropdown, FormControl, InputGroup, Row } from 'react-bootstrap'
+import safeJsonStringify from 'fast-safe-stringify';
 
 import { Habit } from '@prisma/client'
 
