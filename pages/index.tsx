@@ -1,8 +1,7 @@
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { getSession, signIn } from 'next-auth/react'
-import { Button } from 'react-bootstrap'
-
-import Layout from 'components/layout/layout'
+import Layout from 'components/layout/layout';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { getSession, signIn } from 'next-auth/react';
+import { Button } from 'react-bootstrap';
 
 export default function Home({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
     return (

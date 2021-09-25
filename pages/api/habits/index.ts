@@ -1,8 +1,7 @@
-import { getSession } from 'next-auth/react'
+import { getSession } from 'next-auth/react';
+import prisma from 'prisma/client';
 
-import { Habit } from '@prisma/client'
-
-import prisma from 'prisma/client'
+import { Habit } from '@prisma/client';
 
 import type { NextApiRequest, NextApiResponse } from 'next'
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Habit[] | Habit>) {

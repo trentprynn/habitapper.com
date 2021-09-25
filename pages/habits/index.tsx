@@ -1,15 +1,16 @@
-import moment from 'moment'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { getSession, signOut } from 'next-auth/react'
-import { useRouter } from 'next/router'
-import { useState } from 'react'
-import { Button, Card, Col, Container, Dropdown, FormControl, InputGroup, Row } from 'react-bootstrap'
+import Layout from 'components/layout/layout';
 import safeJsonStringify from 'fast-safe-stringify';
+import moment from 'moment';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { getSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import { getHabitsForUser } from 'pages/api/habits';
+import { useState } from 'react';
+import {
+    Button, Card, Col, Container, Dropdown, FormControl, InputGroup, Row
+} from 'react-bootstrap';
 
-import { Habit } from '@prisma/client'
-
-import Layout from 'components/layout/layout'
-import { getHabitsForUser } from 'pages/api/habits'
+import { Habit } from '@prisma/client';
 
 export default function Home({ session, habits }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const router = useRouter()
