@@ -20,7 +20,7 @@ Repository for the source code of HabiTapper.com
         - `EMAIL_USERNAME`
         - `EMAIL_PASSWORD`
         - `EMAIL_FROM`
-    - access key for HTTP request authorization that run CRON like actions (example: resetting user streak counts that have not been continued within 24 hours)
+    - access key for HTTP request authorization that runs CRON like actions (example: resetting user streak counts that have not been claimed)
         - `APP_KEY=local_key`
     - next auth redirect url
         - `NEXTAUTH_URL=http://localhost:3000`
@@ -37,7 +37,7 @@ Repository for the source code of HabiTapper.com
 1. `yarn prisma studio`
     - runs a local website at `localhost:5555` that allows for easy viewing and interaction with the local postgres database the application is using
 2. `curl -I --request POST --url "http://localhost:3000/api/tasks/processExpiredHabits" --header "Authorization: Bearer local_key"`
-    - sends a HTTP POST request to the API route that resets habit streaks that are older then 24 hours. In production you should setup automatic pinging of this end point so user's habit streaks are reset after not being.
+    - sends a HTTP POST request to the API route that resets habit streaks that were not claimed. In production you should setup automatic pinging of this end point so user habit streaks are reset after not being claimed.
 3. `docker run --name pgadmin4 -e PGADMIN_DEFAULT_EMAIL=test@example.com -e PGADMIN_DEFAULT_PASSWORD=your_password -e PGADMIN_LISTEN_PORT=4000 -p 4000:4000 -v pgadmin_data:/var/lib/pgadmin -d dpage/pgadmin4`
     - runs a pgadmin4 container that you can configure to connect to your local (or remote) postgres database, useful if you want to look into your database more deeply then `yarn prisma studio` offers
         - **NOTE**: if you're trying to connect to your local database from pgadmin4 running in a container use the host name `host.docker.internal` instead of `localhost` during inital server connection configuration
