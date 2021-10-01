@@ -20,7 +20,7 @@ class MyDocument extends Document {
                     <link rel="manifest" href="https://habitapper.com/manifest.json" />
                     <script async defer src="https://sa.habitapper.com/latest.js"></script>
                     <noscript>
-                        <img
+                        <img // eslint-disable-line
                             src="https://sa.habitapper.com/noscript.gif"
                             alt=""
                             referrerPolicy="no-referrer-when-downgrade"

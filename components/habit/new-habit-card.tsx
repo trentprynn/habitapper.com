@@ -56,6 +56,9 @@ const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
             return
         }
 
+        // here if we were able to add new habit,
+        // refresh habits so user sees updated habits
+        setNewHabitName('')
         habitChanged()
     }
 }
