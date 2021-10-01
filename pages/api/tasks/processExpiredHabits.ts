@@ -1,7 +1,7 @@
-import moment from 'moment';
-import prisma from 'prisma/client';
-
+import moment from 'moment'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import prisma from 'prisma/client'
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const APP_KEY = process.env.APP_KEY
 

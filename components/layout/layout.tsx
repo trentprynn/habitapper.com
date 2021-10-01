@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { FaGithub, FaTwitter, FaInstagram } from 'react-icons/fa'
+import { FaGithub, FaInstagram, FaTwitter } from 'react-icons/fa'
 import { IoLogoVenmo } from 'react-icons/io5'
 
 export default function Layout({ children, title = 'HabiTapper' }: any) {
