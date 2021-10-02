@@ -1,7 +1,7 @@
 import { Habit } from '@prisma/client'
 import moment from 'moment'
-import React from 'react'
-import { Button, Card, Dropdown } from 'react-bootstrap'
+import { useState } from 'react'
+import { Button, Card, Dropdown, Spinner } from 'react-bootstrap'
 
 interface onChangeSignature {
     (): void
@@ -13,6 +13,8 @@ type HabitCardProps = {
 }
 
 const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
+    const [loading, setLoading] = useState(false)
+
     return (
         <Card className="h-100">
             <Card.Header className="text-end">
@@ -29,12 +31,28 @@ const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
                     <b>Streak:</b> {habit.streak}
                 </Card.Text>
                 {dateOlderThen16HoursOrNull(habit.streakContinuedAt) ? (
-                    <Button variant="success" onClick={async () => continueHabitStreak(habit.habitId)}>
-                        Claim
+                    <Button
+                        variant="success"
+                        disabled={loading}
+                        onClick={async () => continueHabitStreak(habit.habitId)}
+                    >
+                        {loading ? (
+                            <Spinner as="span" animation="border" role="status" size="sm">
+                                <span className="visually-hidden">Loading...</span>
+                            </Spinner>
+                        ) : (
+                            'Claim'
+                        )}
                     </Button>
                 ) : (
                     <Button variant="secondary" disabled>
-                        Claim
+                        {loading ? (
+                            <Spinner as="span" animation="border" role="status" size="sm">
+                                <span className="visually-hidden">Loading...</span>
+                            </Spinner>
+                        ) : (
+                            'Claim'
+                        )}
                     </Button>
                 )}
             </Card.Body>
@@ -49,6 +67,8 @@ const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
     )
 
     async function continueHabitStreak(habitId: number): Promise<void> {
+        setLoading(true)
+
         // make POST request to the backend to continue the
         // streak for the given habit, the request body is
         // empty as there's not request data to be sent, this
@@ -64,14 +84,18 @@ const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
         // if continue streak POST call failed, log to console
         if (result.status !== 200) {
             console.log(`continue habit streak failed --> ${result.status} ${result.statusText}`)
+            setLoading(false)
             return
         }
 
         habitChanged()
+        setLoading(false)
     }
 
     async function deleteHabit(habitId: number): Promise<void> {
         if (window.confirm('Are you sure you want to delete that habit?')) {
+            setLoading(true)
+
             // make DELETE call to api for given habitId
             var result = await fetch(`api/habits/${habitId}`, {
                 method: 'DELETE',
@@ -79,10 +103,12 @@ const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
 
             if (result.status !== 200) {
                 console.log(`delete habit failed --> ${result.status} ${result.statusText}`)
+                setLoading(true)
                 return
             }
 
             habitChanged()
+            setLoading(true)
         }
     }
 }

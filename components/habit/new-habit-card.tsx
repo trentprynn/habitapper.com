@@ -1,6 +1,6 @@
 import safeJsonStringify from 'fast-safe-stringify'
 import { useState } from 'react'
-import { Button, Card, FormControl, InputGroup } from 'react-bootstrap'
+import { Button, Card, FormControl, InputGroup, Spinner } from 'react-bootstrap'
 
 interface onChangeSignature {
     (): void
@@ -11,6 +11,7 @@ type NewHabitCardProps = {
 }
 
 const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
+    const [loading, setLoading] = useState(false)
     const [newHabitName, setNewHabitName] = useState('')
 
     return (
@@ -26,7 +27,13 @@ const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
                     <b>Streak:</b> 0
                 </Card.Text>
                 <Button variant="primary" className="m-1" onClick={async () => addHabit(newHabitName)}>
-                    Add
+                    {loading ? (
+                        <Spinner as="span" animation="border" role="status" size="sm">
+                            <span className="visually-hidden">Loading...</span>
+                        </Spinner>
+                    ) : (
+                        'Add'
+                    )}
                 </Button>
             </Card.Body>
             <Card.Footer>
@@ -36,6 +43,8 @@ const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
     )
 
     async function addHabit(newHabitName: string): Promise<void> {
+        setLoading(true)
+
         // make POST request to the backend to continue the
         // streak for the given habit, the request body is
         // empty as there's not request data to be sent, this
@@ -53,6 +62,7 @@ const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
         // if add habit POST call failed, log to console
         if (result.status !== 200) {
             console.log(`add habit failed --> ${result.status} ${result.statusText}`)
+            setLoading(false)
             return
         }
 
@@ -60,6 +70,7 @@ const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
         // refresh habits so user sees updated habits
         setNewHabitName('')
         habitChanged()
+        setLoading(false)
     }
 }
 
