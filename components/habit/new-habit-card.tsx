@@ -26,7 +26,12 @@ const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
                 <Card.Text>
                     <b>Streak:</b> 0
                 </Card.Text>
-                <Button variant="primary" className="m-1" onClick={async () => addHabit(newHabitName)}>
+                <Button
+                    variant="primary"
+                    className="m-1"
+                    disabled={loading}
+                    onClick={async () => addHabit(newHabitName)}
+                >
                     {loading ? (
                         <Spinner as="span" animation="border" role="status" size="sm">
                             <span className="visually-hidden">Loading...</span>
