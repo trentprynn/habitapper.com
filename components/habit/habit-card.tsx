@@ -73,7 +73,7 @@ const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
         // streak for the given habit, the request body is
         // empty as there's not request data to be sent, this
         // is more like an 'http touch' request
-        var result = await fetch(`api/habits/${habitId}`, {
+        var response = await fetch(`/api/habits/${habitId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -82,8 +82,8 @@ const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
         })
 
         // if continue streak POST call failed, log to console
-        if (result.status !== 200) {
-            console.log(`continue habit streak failed --> ${result.status} ${result.statusText}`)
+        if (response.status !== 200) {
+            console.log(`continue habit streak failed --> ${response.status} ${response.statusText}`)
             setLoading(false)
             return
         }
@@ -97,7 +97,7 @@ const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
             setLoading(true)
 
             // make DELETE call to api for given habitId
-            var result = await fetch(`api/habits/${habitId}`, {
+            var result = await fetch(`/api/habits/${habitId}`, {
                 method: 'DELETE',
             })
 

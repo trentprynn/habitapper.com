@@ -10,6 +10,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
+// USER SETTING TABLES -- 1 -> 0..1 relationship to User table
+model UserSettings {
+  userId         String   @id @unique
+  timeZone       String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 // HABIT TABLES
 model Habit {
   habitId           Int       @id @default(autoincrement())
@@ -19,7 +28,7 @@ model Habit {
   streakContinuedAt DateTime?
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
-  user              User      @relation(fields: [userId], references: [id])
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 // NEXT-AUTH TABLES
@@ -53,14 +62,15 @@ model Session {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String         @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?        @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
   habits        Habit[]
+  UserSettings  UserSettings[]
 }
 
 model VerificationToken {

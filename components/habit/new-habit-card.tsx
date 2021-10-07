@@ -54,7 +54,7 @@ const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
         // streak for the given habit, the request body is
         // empty as there's not request data to be sent, this
         // is more like an 'http touch' request
-        var result = await fetch(`api/habits`, {
+        var response = await fetch(`/api/habits`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -65,8 +65,8 @@ const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
         })
 
         // if add habit POST call failed, log to console
-        if (result.status !== 200) {
-            console.log(`add habit failed --> ${result.status} ${result.statusText}`)
+        if (response.status !== 200) {
+            console.log(`add habit failed --> ${response.status} ${response.statusText}`)
             setLoading(false)
             return
         }

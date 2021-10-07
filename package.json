@@ -12,26 +12,29 @@
     },
     "dependencies": {
         "@next-auth/prisma-adapter": "0.5.2-next.15",
-        "@prisma/client": "3.1.1",
-        "bootstrap": "5.1.1",
+        "@prisma/client": "3.2.1",
+        "bootstrap": "5.1.2",
         "fast-safe-stringify": "^2.1.1",
         "moment": "^2.29.1",
+        "moment-timezone": "^0.5.33",
         "next": "11.1.2",
         "next-auth": "4.0.0-beta.4",
         "react": "17.0.2",
         "react-bootstrap": "2.0.0-rc.0",
+        "react-bootstrap-typeahead": "^5.2.0",
         "react-dom": "17.0.2",
         "react-icons": "4.3.1"
     },
     "devDependencies": {
-        "@types/node": "16.10.2",
+        "@types/node": "16.10.3",
         "@types/react": "17.0.27",
+        "@types/react-bootstrap-typeahead": "^5.1.7",
         "eslint": "7.32.0",
         "eslint-config-next": "11.1.2",
         "eslint-config-prettier": "^8.3.0",
         "prettier": "2.4.1",
         "prettier-plugin-organize-imports": "^2.3.4",
-        "prisma": "3.1.1",
+        "prisma": "3.2.1",
         "typescript": "^4.4.2"
     }
 }
