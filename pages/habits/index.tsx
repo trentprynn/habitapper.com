@@ -23,8 +23,8 @@ export default function Home({ session, habits }: InferGetServerSidePropsType<ty
                 <Button className="m-1" onClick={() => signOut()}>
                     Sign out
                 </Button>
-                <Link href="/user/settings">
-                    <Button href="/user/settings" className="m-1" variant="secondary">
+                <Link href="/user/settings" passHref>
+                    <Button className="m-1" variant="secondary">
                         Settings
                     </Button>
                 </Link>

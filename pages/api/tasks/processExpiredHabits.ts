@@ -2,24 +2,52 @@ import moment from 'moment'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma from 'prisma/client'
 
+/**
+ * @swagger
+ * /api/tasks/processExpiredHabits:
+ *   post:
+ *     description: Kicks off the process to reset habit streaks that were not continued
+ *     parameters:
+ *       - in: header
+ *         name: Authorization
+ *         required: true
+ *         description: Authorization secret to verify caller has access to kick off this process.
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Represents that habit streaks were successfully reset
+ *       401:
+ *         description: Error when called with no authorization header
+ *       403:
+ *         description: Error when called with incorrect authorization header
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const APP_KEY = process.env.APP_KEY
 
     try {
-        if (req.headers.authorization) {
-            const CALLER_PROVIDED_APP_KEY = req.headers.authorization.split(' ')[1]
+        switch (req.method) {
+            case 'POST':
+                if (req.headers.authorization) {
+                    const CALLER_PROVIDED_APP_KEY = req.headers.authorization.split(' ')[1]
 
-            if (APP_KEY === CALLER_PROVIDED_APP_KEY) {
-                // caller provided valid auth
-                await processExpiredHabits()
-                res.status(200).end()
-            } else {
-                // caller provided invalid auth
-                res.status(403).end()
-            }
-        } else {
-            // caller did not provide auth
-            res.status(401).end()
+                    if (APP_KEY === CALLER_PROVIDED_APP_KEY) {
+                        // caller provided valid auth
+                        await processExpiredHabits()
+                        res.status(200).end()
+                    } else {
+                        // caller provided invalid auth
+                        res.status(403).end()
+                    }
+                } else {
+                    // caller did not provide auth
+                    res.status(401).end()
+                }
+                return
+            default:
+                res.setHeader('Allow', ['POST'])
+                res.status(405).end(`Method ${req.method} Not Allowed`)
+                return
         }
     } catch (err) {
         res.status(500).end()

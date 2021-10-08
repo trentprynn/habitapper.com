@@ -9,6 +9,24 @@ type UserSettingsModel = {
     timeZone: string
 }
 
+/**
+ * @swagger
+ * /api/user/settings:
+ *   get:
+ *     description: Returns the current user's settings
+ *     responses:
+ *       200:
+ *         description: JSON representation of the current user's settings
+ *       404:
+ *         description: Error when called for a user who has not had their settings saved yet
+ *   post:
+ *     description: Creates or updates the current user's settings
+ *     responses:
+ *       200:
+ *         description: JSON representation of the new or updated user's settings
+ *       400:
+ *         description: Error when called with null or invalid user settings
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<UserSettings>) {
     const session = await getSession({ req })
 

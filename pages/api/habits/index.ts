@@ -3,6 +3,20 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
 import prisma from 'prisma/client'
 
+/**
+ * @swagger
+ * /api/habits:
+ *   get:
+ *     description: Retrieves the the calling user's habits
+ *     responses:
+ *       200:
+ *         description: JSON representation of the calling user's habits
+ *   post:
+ *     description: Creates a habit for the calling user
+ *     responses:
+ *       200:
+ *         description: JSON representation of the created habit
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Habit[] | Habit>) {
     const session = await getSession({ req })
 

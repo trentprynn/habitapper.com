@@ -18,8 +18,8 @@ export default function Home({ session, settings }: InferGetServerSidePropsType<
         router.replace(router.asPath)
     }
 
-    // load the user's previously saved timezone into a 
-    // string array, this may be empty if the user has never 
+    // load the user's previously saved timezone into a
+    // string array, this may be empty if the user has never
     // saved their timezone previously
     let startingTz: string[] = []
     if (settings && settings.timeZone) {
@@ -37,8 +37,8 @@ export default function Home({ session, settings }: InferGetServerSidePropsType<
                 <Button className="m-1" onClick={() => signOut()}>
                     Sign out
                 </Button>
-                <Link href="/habits">
-                    <Button href="/habits" className="m-1" variant="secondary">
+                <Link href="/habits" passHref>
+                    <Button className="m-1" variant="secondary">
                         Habits
                     </Button>
                 </Link>

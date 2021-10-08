@@ -4,6 +4,60 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
 import prisma from 'prisma/client'
 
+/**
+ * @swagger
+ * /api/habits/{habitId}:
+ *   get:
+ *     description: Retrieves the habit with the given habitId
+ *     parameters:
+ *       - in: path
+ *         name: habitId
+ *         required: true
+ *         description: Numeric ID of the habit to retrieve.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: JSON representation of the habit with the given habitId
+ *       403:
+ *         description: Error when called for a habitId that doesn't belong to the calling user
+ *       404:
+ *         description: Error when called for a habitId that doesn't exist
+ *   post:
+ *     description: Continues the habit streak for a given habit
+ *     parameters:
+ *       - in: path
+ *         name: habitId
+ *         required: true
+ *         description: Numeric ID of the habit whose streak to continue.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: JSON representation of the habit whose streak was continued
+ *       400:
+ *         description: Error when called for a habitId that's already been continued
+ *       403:
+ *         description: Error when called for a habitId that doesn't belong to the calling user
+ *       404:
+ *         description: Error when called for a habitId that doesn't exist
+ *   delete:
+ *     description: Deletes the habit with the given habitId
+ *     parameters:
+ *       - in: path
+ *         name: habitId
+ *         required: true
+ *         description: Numeric ID of the habit to delete.
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: JSON representation of the deleted habit
+ *       403:
+ *         description: Error when called for a habitId that doesn't belong to the calling user
+ *       404:
+ *         description: Error when called for a habitId that doesn't exist
+ */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Habit>) {
     const session = await getSession({ req })
 
@@ -36,7 +90,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 return
             }
             case 'POST': {
-                // create a new habit for a user
+                // continue a user's streak for the given habit
+
+                // grab the habit with the given id
                 let currentHabit = await getHabit(habitId)
 
                 // validate habit with given id exists
