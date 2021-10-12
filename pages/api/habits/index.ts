@@ -8,11 +8,15 @@ import prisma from 'prisma/client'
  * /api/habits:
  *   get:
  *     description: Retrieves the the calling user's habits
+ *     tags:
+ *       - habits
  *     responses:
  *       200:
  *         description: JSON representation of the calling user's habits
  *   post:
  *     description: Creates a habit for the calling user
+ *     tags:
+ *       - habits
  *     responses:
  *       200:
  *         description: JSON representation of the created habit

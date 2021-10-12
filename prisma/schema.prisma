@@ -70,7 +70,7 @@ model User {
   accounts      Account[]
   sessions      Session[]
   habits        Habit[]
-  UserSettings  UserSettings[]
+  UserSettings  UserSettings?
 }
 
 model VerificationToken {

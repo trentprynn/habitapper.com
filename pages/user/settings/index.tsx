@@ -15,7 +15,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css'
 export default function Home({ session, settings }: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const router = useRouter()
     const refreshData = () => {
-        router.replace(router.asPath)
+        router.replace(router.asPath, undefined, { scroll: false })
     }
 
     // load the user's previously saved timezone into a
@@ -44,14 +44,12 @@ export default function Home({ session, settings }: InferGetServerSidePropsType<
                 </Link>
             </div>
             <Container className="mt-3">
-                {error ? (
+                {error && (
                     <Row className="justify-content-md-center">
                         <Col md={6}>
                             <p className="text-danger">{error}</p>
                         </Col>
                     </Row>
-                ) : (
-                    <div></div>
                 )}
                 <Row className="justify-content-md-center">
                     <Col md={6}>

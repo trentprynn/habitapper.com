@@ -1,4 +1,5 @@
-import { Habit } from '@prisma/client'
+import { Habit, UserSettings } from '@prisma/client'
+import { habitAbleToBeClaimed } from 'common/functions/time'
 import moment from 'moment'
 import { useState } from 'react'
 import { Button, Card, Dropdown, Spinner } from 'react-bootstrap'
@@ -9,11 +10,13 @@ interface onChangeSignature {
 
 type HabitCardProps = {
     habit: Habit
+    userSettings: UserSettings | null
     habitChanged: onChangeSignature
 }
 
-const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
+const HabitCard = ({ habit, userSettings, habitChanged }: HabitCardProps) => {
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState('')
 
     return (
         <Card className="h-100">
@@ -27,10 +30,11 @@ const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
             </Card.Header>
             <Card.Body className="text-center">
                 <Card.Title>{habit.name}</Card.Title>
+                {error && <p className="text-danger">{error}</p>}
                 <Card.Text>
                     <b>Streak:</b> {habit.streak}
                 </Card.Text>
-                {dateOlderThen16HoursOrNull(habit.streakContinuedAt) ? (
+                {userSettings == null || habitAbleToBeClaimed(habit, userSettings.timeZone) ? (
                     <Button
                         variant="success"
                         disabled={loading}
@@ -68,12 +72,13 @@ const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
 
     async function continueHabitStreak(habitId: number): Promise<void> {
         setLoading(true)
+        setError('')
 
         // make POST request to the backend to continue the
         // streak for the given habit, the request body is
         // empty as there's not request data to be sent, this
         // is more like an 'http touch' request
-        var response = await fetch(`/api/habits/${habitId}`, {
+        var response = await fetch(`/api/habits/${habitId}/claim`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -84,6 +89,7 @@ const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
         // if continue streak POST call failed, log to console
         if (response.status !== 200) {
             console.log(`continue habit streak failed --> ${response.status} ${response.statusText}`)
+            setError(await response.text())
             setLoading(false)
             return
         }
@@ -95,14 +101,16 @@ const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
     async function deleteHabit(habitId: number): Promise<void> {
         if (window.confirm('Are you sure you want to delete that habit?')) {
             setLoading(true)
+            setError('')
 
             // make DELETE call to api for given habitId
-            var result = await fetch(`/api/habits/${habitId}`, {
+            var response = await fetch(`/api/habits/${habitId}`, {
                 method: 'DELETE',
             })
 
-            if (result.status !== 200) {
-                console.log(`delete habit failed --> ${result.status} ${result.statusText}`)
+            if (response.status !== 200) {
+                console.log(`delete habit failed --> ${response.status} ${response.statusText}`)
+                setError(await response.text())
                 setLoading(true)
                 return
             }
@@ -114,15 +122,3 @@ const HabitCard = ({ habit, habitChanged }: HabitCardProps) => {
 }
 
 export default HabitCard
-
-function dateOlderThen16HoursOrNull(date: Date | null): boolean {
-    if (date == null) {
-        return true
-    }
-
-    if (moment().diff(moment(date), 'hours') >= 16) {
-        return true
-    }
-
-    return false
-}

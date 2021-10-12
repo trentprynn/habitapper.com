@@ -13,6 +13,7 @@ type NewHabitCardProps = {
 const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
     const [loading, setLoading] = useState(false)
     const [newHabitName, setNewHabitName] = useState('')
+    const [error, setError] = useState('')
 
     return (
         <Card className="text-center h-100">
@@ -23,6 +24,7 @@ const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
                     </InputGroup>
                     <InputGroup></InputGroup>
                 </Card.Title>
+                {error && <p className="text-danger">{error}</p>}
                 <Card.Text>
                     <b>Streak:</b> 0
                 </Card.Text>
@@ -49,6 +51,7 @@ const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
 
     async function addHabit(newHabitName: string): Promise<void> {
         setLoading(true)
+        setError('')
 
         // make POST request to the backend to continue the
         // streak for the given habit, the request body is
@@ -67,6 +70,7 @@ const NewHabitCard = ({ habitChanged }: NewHabitCardProps) => {
         // if add habit POST call failed, log to console
         if (response.status !== 200) {
             console.log(`add habit failed --> ${response.status} ${response.statusText}`)
+            setError(await response.text())
             setLoading(false)
             return
         }

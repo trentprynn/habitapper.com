@@ -8,12 +8,17 @@ import { getSession, signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { getHabitsForUser } from 'pages/api/habits'
+import { getSettingsForUser } from 'pages/api/user/settings'
 import { Button, Col, Container, Row } from 'react-bootstrap'
 
-export default function Home({ session, habits }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home({
+    session,
+    userSettings,
+    habits,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
     const router = useRouter()
     const refreshData = () => {
-        router.replace(router.asPath)
+        router.replace(router.asPath, undefined, { scroll: false })
     }
 
     return (
@@ -33,7 +38,7 @@ export default function Home({ session, habits }: InferGetServerSidePropsType<ty
                 <Row xs={2} md={3}>
                     {habits.map((habit: Habit) => (
                         <Col className="pt-3" key={habit.habitId}>
-                            <HabitCard habit={habit} habitChanged={refreshData} />
+                            <HabitCard habit={habit} userSettings={userSettings} habitChanged={refreshData} />
                         </Col>
                     ))}
                     <Col className="pt-3">
@@ -57,11 +62,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         }
     }
 
+    const userSettings = JSON.parse(safeJsonStringify(await getSettingsForUser(session.user.id)))
     const habits = JSON.parse(safeJsonStringify(await getHabitsForUser(session.user.id)))
 
     return {
         props: {
             session,
+            userSettings,
             habits,
         },
     }
