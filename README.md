@@ -18,6 +18,8 @@ Repository for the source code of HabiTapper.com
         - `APP_KEY=local_key`
     - next auth redirect url
         - `NEXTAUTH_URL=http://localhost:3000`
+    - public url
+        - `NEXT_PUBLIC_URL=http://localhost:3000`
     - prisma (JavaScript ORM) db connection string
         - `DATABASE_URL=postgresql://habitapper_user:habitapper_pass@localhost:5432/habitapper`
 5. run `yarn`

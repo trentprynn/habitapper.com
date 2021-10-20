@@ -25,7 +25,10 @@ export default function Home({
         <Layout>
             <div>
                 <p>Signed in as {session.user.email}</p>
-                <Button className="m-1" onClick={() => signOut()}>
+                <Button
+                    className="m-1"
+                    onClick={() => signOut({ callbackUrl: `${process.env.NEXT_PUBLIC_URL}/api/auth/logout` })}
+                >
                     Sign out
                 </Button>
                 <Link href="/user/settings" passHref>
