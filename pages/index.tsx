@@ -12,7 +12,7 @@ export default function Home({}: InferGetServerSidePropsType<typeof getServerSid
             <div className="pt-5 d-flex flex-column justify-content-center align-items-center">
                 <h1>HabiTapper</h1>
                 <p>feedback loop habit tracking.</p>
-                <Button className="m-1" onClick={() => signIn()}>
+                <Button className="m-1" onClick={() => signIn('auth0')}>
                     Sign in
                 </Button>
             </div>
