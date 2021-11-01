@@ -1,7 +1,7 @@
 import { Habit } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
-import prisma from 'prisma/client'
+import { prisma } from 'prisma/client'
 
 /**
  * @swagger

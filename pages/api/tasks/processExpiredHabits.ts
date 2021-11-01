@@ -1,7 +1,7 @@
 import { UserSettings } from '.prisma/client'
 import moment from 'moment-timezone'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from 'prisma/client'
+import { prisma } from 'prisma/client'
 
 /**
  * @swagger

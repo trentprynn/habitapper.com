@@ -4,7 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
 import { getHabit } from 'pages/api/habits/[habitId]'
 import { getSettingsForUser } from 'pages/api/user/settings'
-import prisma from 'prisma/client'
+import { prisma } from 'prisma/client'
 
 /**
  * @swagger

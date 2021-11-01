@@ -1,7 +1,7 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import NextAuth from 'next-auth'
 import Auth0Provider from 'next-auth/providers/auth0'
-import prisma from 'prisma/client'
+import { prisma } from 'prisma/client'
 
 // augment session returned to include
 // the user id

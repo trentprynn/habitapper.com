@@ -1,16 +1,11 @@
 import { PrismaClient } from '@prisma/client'
 
-// add prisma to the NodeJS global types to
-// prevent multiple instances of prisma client
-// get created by hot-reloading in development
 declare global {
-    var prisma: PrismaClient
+    var prisma: PrismaClient | undefined
 }
 
-const prisma = global.prisma || new PrismaClient()
+export const prisma = global.prisma || new PrismaClient()
 
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV !== 'production') {
     global.prisma = prisma
-}
-
-export default prisma
+} 

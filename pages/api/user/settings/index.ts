@@ -3,7 +3,7 @@ import safeJsonStringify from 'fast-safe-stringify'
 import moment from 'moment-timezone'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getSession } from 'next-auth/react'
-import prisma from 'prisma/client'
+import { prisma } from 'prisma/client'
 
 type UserSettingsModel = {
     timeZone: string
