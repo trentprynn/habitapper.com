@@ -9,3 +9,6 @@ node_modules
 
 # macos files
 .DS_Store
+
+# debug files
+yarn-error.log
