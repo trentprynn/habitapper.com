@@ -18,6 +18,7 @@ Repository for the source code of HabiTapper.com
         - `APP_KEY=local_key`
     - next auth redirect url
         - `NEXTAUTH_URL=http://localhost:3000`
+        - `NEXTAUTH_SECRET=LOCAL_SECRET_FOR_DEVELOPMENT`
     - public url
         - `NEXT_PUBLIC_URL=http://localhost:3000`
     - prisma (JavaScript ORM) db connection string
