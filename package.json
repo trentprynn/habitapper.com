@@ -7,8 +7,7 @@
         "build": "next build",
         "vercel-build": "prisma generate && prisma migrate deploy && next build",
         "start": "next start",
-        "lint": "next lint",
-        "pretty": "prettier --write \"./**/*.{js,ts,jsx,tsx,json,html,scss,css,yaml}\""
+        "lint": "next lint --fix"
     },
     "dependencies": {
         "@next-auth/prisma-adapter": "0.5.2-next.19",
@@ -29,14 +28,15 @@
         "swagger-ui-react": "4.1.0"
     },
     "devDependencies": {
-        "@types/node": "16.11.9",
-        "@types/react": "17.0.36",
+        "@types/node": "16.11.10",
+        "@types/react": "17.0.37",
         "@types/react-bootstrap-typeahead": "5.1.8",
         "@types/swagger-ui-react": "3.35.3",
         "eslint": "7.32.0",
         "eslint-config-next": "12.0.4",
         "eslint-config-prettier": "8.3.0",
-        "prettier": "2.4.1",
+        "eslint-plugin-prettier": "4.0.0",
+        "prettier": "2.5.0",
         "prettier-plugin-organize-imports": "2.3.4",
         "prisma": "3.5.0",
         "typescript": "4.4.4"
