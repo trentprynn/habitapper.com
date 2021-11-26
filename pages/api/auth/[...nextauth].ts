@@ -1,10 +1,10 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import NextAuth from 'next-auth'
+import NextAuth, { NextAuthOptions } from 'next-auth'
 import Auth0Provider from 'next-auth/providers/auth0'
 import { prisma } from 'prisma/client'
 
-// augment session returned to include
-// the user id
+// augment nest-auth session that's used throughout
+// the application to include an 'id' field
 declare module 'next-auth' {
     interface Session {
         user: {
@@ -16,7 +16,7 @@ declare module 'next-auth' {
     }
 }
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
     providers: [
         Auth0Provider({
             clientId: process.env.AUTH0_CLIENT_ID || '',
@@ -32,4 +32,6 @@ export default NextAuth({
         },
     },
     secret: process.env.NEXTAUTH_SECRET,
-})
+}
+
+export default NextAuth(authOptions)

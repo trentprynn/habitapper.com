@@ -3,10 +3,12 @@ import HabitCard from 'components/habit/habit-card'
 import NewHabitCard from 'components/habit/new-habit-card'
 import Layout from 'components/layout/layout'
 import safeJsonStringify from 'fast-safe-stringify'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { getSession, signOut } from 'next-auth/react'
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import { getServerSession } from 'next-auth/next'
+import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { getHabitsForUser } from 'pages/api/habits'
 import { getSettingsForUser } from 'pages/api/user/settings'
 import { Button, Col, Container, Row } from 'react-bootstrap'
@@ -53,9 +55,8 @@ export default function Home({
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const session = await getSession(context)
-
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const session = await getServerSession(context, authOptions)
     if (!session) {
         return {
             redirect: {

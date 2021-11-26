@@ -1,9 +1,9 @@
-import { Habit } from '.prisma/client'
+import { Habit } from '@prisma/client'
 import moment from 'moment-timezone'
 
 export function habitAbleToBeClaimed(habit: Habit, timeZone: string) {
     // if the habit's streakContinuedAt is null it's
-    // never been claied so it can be claimed
+    // never been claimed so it can be claimed
     if (habit.streakContinuedAt == null) {
         return true
     }

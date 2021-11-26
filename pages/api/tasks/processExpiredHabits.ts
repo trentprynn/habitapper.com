@@ -1,4 +1,4 @@
-import { UserSettings } from '.prisma/client'
+import { UserSettings } from '@prisma/client'
 import moment from 'moment-timezone'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from 'prisma/client'
@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 export async function processExpiredHabits(): Promise<void> {
     // NOTE: the following method of resetting user habit streaks
     //       seems horribly inefficient but it's simple, if there
-    //       is ever scale it can almostsurely be rewritten in a
+    //       is ever scale it can almost surely be rewritten in a
     //       more effective way
 
     // grab all users that have a timezone set

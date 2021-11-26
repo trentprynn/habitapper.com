@@ -1,6 +1,7 @@
 import { Habit } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getSession } from 'next-auth/react'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { prisma } from 'prisma/client'
 
 /**
@@ -44,7 +45,7 @@ import { prisma } from 'prisma/client'
  *         description: Habit not found
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Habit>) {
-    const session = await getSession({ req })
+    const session = await getServerSession({ req, res }, authOptions)
 
     const habitId = parseInt(req.query.habitId as string, 10)
 
@@ -61,7 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 }
 
                 // now that we know we got back a habit
-                // remove the possiblity of it being null
+                // remove the possibility of it being null
                 habit = habit as Habit
 
                 // ensure habit belongs to requesting user

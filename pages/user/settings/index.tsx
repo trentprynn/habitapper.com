@@ -1,11 +1,13 @@
-import { UserSettings } from '.prisma/client'
+import { UserSettings } from '@prisma/client'
 import Layout from 'components/layout/layout'
 import safeJsonStringify from 'fast-safe-stringify'
 import moment from 'moment-timezone'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { getSession, signOut } from 'next-auth/react'
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import { getServerSession } from 'next-auth/next'
+import { signOut } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { getSettingsForUser } from 'pages/api/user/settings'
 import { useState } from 'react'
 import { Button, Col, Container, Form, Row, Spinner } from 'react-bootstrap'
@@ -129,8 +131,8 @@ export default function Home({ session, settings }: InferGetServerSidePropsType<
     }
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const session = await getSession(context)
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const session = await getServerSession(context, authOptions)
 
     if (!session) {
         return {

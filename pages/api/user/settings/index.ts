@@ -2,7 +2,8 @@ import { UserSettings } from '@prisma/client'
 import safeJsonStringify from 'fast-safe-stringify'
 import moment from 'moment-timezone'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getSession } from 'next-auth/react'
+import { getServerSession } from 'next-auth/next'
+import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { prisma } from 'prisma/client'
 
 type UserSettingsModel = {
@@ -32,7 +33,7 @@ type UserSettingsModel = {
  *         description: Invalid user settings given
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<UserSettings>) {
-    const session = await getSession({ req })
+    const session = await getServerSession({ req, res }, authOptions)
 
     if (session && session.user && session.user.id) {
         switch (req.method) {

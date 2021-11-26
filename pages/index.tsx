@@ -1,12 +1,11 @@
 import Layout from 'components/layout/layout'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
-import { getSession, signIn } from 'next-auth/react'
-import { useRouter } from 'next/router'
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import { getServerSession } from 'next-auth/next'
+import { signIn } from 'next-auth/react'
+import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { Button } from 'react-bootstrap'
 
 export default function Home({}: InferGetServerSidePropsType<typeof getServerSideProps>) {
-    const router = useRouter()
-
     return (
         <Layout>
             <div className="pt-5 d-flex flex-column justify-content-center align-items-center">
@@ -20,8 +19,8 @@ export default function Home({}: InferGetServerSidePropsType<typeof getServerSid
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const session = await getSession(context)
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const session = await getServerSession(context, authOptions)
 
     if (session) {
         // if the user is already logged in, redirect them to their
