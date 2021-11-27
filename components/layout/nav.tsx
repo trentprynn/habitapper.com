@@ -20,16 +20,17 @@ export default function Nav({ session }: { session: Session | null }) {
             >
                 Sign out
             </Button>
-            {router.pathname === '/user/settings' ? (
+            {router.pathname !== '/habits' && (
                 <Link href="/habits" passHref>
                     <Button className="m-1" variant="secondary">
                         Habits
                     </Button>
                 </Link>
-            ) : (
+            )}
+            {router.pathname !== '/user/settings' && (
                 <Link href="/user/settings" passHref>
                     <Button className="m-1" variant="secondary">
-                        Habits
+                        Settings
                     </Button>
                 </Link>
             )}
