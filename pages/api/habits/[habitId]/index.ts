@@ -21,6 +21,10 @@ import { prisma } from 'prisma/client'
  *     responses:
  *       200:
  *         description: JSON representation of the habit
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Habit'
  *       403:
  *         description: Habit does not belong to calling user
  *       404:
@@ -39,6 +43,10 @@ import { prisma } from 'prisma/client'
  *     responses:
  *       200:
  *         description: JSON representation of the deleted habit
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Habit'
  *       403:
  *         description: Habit does not belong to calling user
  *       404:
@@ -86,7 +94,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 }
 
                 // now that we know we got back a habit
-                // remove the possiblity of it being null
+                // remove the possibility of it being null
                 habit = habit as Habit
 
                 // ensure habit belongs to requesting user

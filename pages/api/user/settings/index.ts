@@ -20,17 +20,59 @@ type UserSettingsModel = {
  *     responses:
  *       200:
  *         description: JSON representation of the calling user's settings
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserSettings'
  *       404:
  *         description: Calling user does not have settings saved yet
  *   post:
  *     description: Creates or updates the calling user's settings
  *     tags:
  *       - settings
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               timeZone:
+ *                 type: string
+ *                 description: The name of the user's time zone, this value must be found within the list of time zones
+ *                              provided by the moment-timezone library
+ *                 example: America/Phoenix
  *     responses:
  *       200:
- *         description: JSON representation of the new or updated user's settings
+ *         description: The created or updated user settings.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserSettings'
  *       400:
- *         description: Invalid user settings given
+ *         description: Invalid user settings given in request
+ *
+ *
+ * components:
+ *   schemas:
+ *     UserSettings:
+ *       properties:
+ *         userId:
+ *           type: string
+ *           description: the user's id
+ *           example: abc123
+ *         timeZone:
+ *           type: string
+ *           description: the user's time zone
+ *           example: America/Phoenix
+ *         createdAt:
+ *           type: string
+ *           description: the date time in UTC these settings were first created
+ *           example: 2021-10-27T00:13:47.985Z
+ *         updatedAt:
+ *           type: string
+ *           description: the date time in UTC these settings were last updated
+ *           example: 2021-11-27T20:32:42.402Z
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<UserSettings>) {
     const session = await getServerSession({ req, res }, authOptions)
@@ -69,7 +111,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
                 // validate the time zone the user gave is valid
                 if (!moment.tz.names().includes(newUserSettings.timeZone)) {
-                    res.status(400).end(`Invalid time zone ${newUserSettings.timeZone} given in request`)
+                    res.status(400).end(`Invalid time zone, ${newUserSettings.timeZone}, given in request`)
                     return
                 }
 

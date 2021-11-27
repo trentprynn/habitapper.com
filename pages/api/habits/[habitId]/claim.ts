@@ -24,6 +24,10 @@ import { prisma } from 'prisma/client'
  *     responses:
  *       200:
  *         description: JSON representation of the habit whose streak was continued
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Habit'
  *       400:
  *         description: Habit already claimed or calling user does not have a timezone saved
  *       403:
@@ -71,7 +75,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
                 }
 
                 // now that we know we got back the calling user's settings
-                // remove the possiblity of it being null
+                // remove the possibility of it being null
                 userSettings = userSettings as UserSettings
 
                 // check current date in timezone vs habit's date and ensure the habit is older by date
