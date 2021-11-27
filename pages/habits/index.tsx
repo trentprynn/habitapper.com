@@ -1,23 +1,27 @@
-import { Habit } from '@prisma/client'
+import { Habit, UserSettings } from '@prisma/client'
 import HabitCard from 'components/habit/habit-card'
 import NewHabitCard from 'components/habit/new-habit-card'
 import Layout from 'components/layout/layout'
+import Nav from 'components/layout/nav'
 import safeJsonStringify from 'fast-safe-stringify'
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import { GetServerSidePropsContext } from 'next'
+import { Session } from 'next-auth'
 import { getServerSession } from 'next-auth/next'
-import { signOut } from 'next-auth/react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { getHabitsForUser } from 'pages/api/habits'
 import { getSettingsForUser } from 'pages/api/user/settings'
-import { Button, Col, Container, Row } from 'react-bootstrap'
+import { Col, Container, Row } from 'react-bootstrap'
 
 export default function Home({
     session,
     userSettings,
     habits,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: {
+    session: Session
+    userSettings: UserSettings
+    habits: Habit[]
+}) {
     const router = useRouter()
     const refreshData = () => {
         router.replace(router.asPath, undefined, { scroll: false })
@@ -25,20 +29,7 @@ export default function Home({
 
     return (
         <Layout>
-            <div>
-                <p>Signed in as {session.user.email}</p>
-                <Button
-                    className="m-1"
-                    onClick={() => signOut({ callbackUrl: `${process.env.NEXT_PUBLIC_URL}/api/auth/logout` })}
-                >
-                    Sign out
-                </Button>
-                <Link href="/user/settings" passHref>
-                    <Button className="m-1" variant="secondary">
-                        Settings
-                    </Button>
-                </Link>
-            </div>
+            <Nav session={session}></Nav>
             <Container className="mt-3">
                 <Row xs={2} md={3}>
                     {habits.map((habit: Habit) => (

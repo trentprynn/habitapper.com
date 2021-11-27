@@ -4,7 +4,7 @@ import { AiFillApi } from 'react-icons/ai'
 import { FaGithub, FaInstagram, FaTwitter } from 'react-icons/fa'
 import { IoLogoVenmo } from 'react-icons/io5'
 
-export default function Layout({ children, title = 'HabiTapper' }: any) {
+export default function Layout({ children, title = 'HabiTapper' }: { children: any; title?: string }) {
     return (
         <div>
             <Head>

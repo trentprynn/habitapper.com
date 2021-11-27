@@ -1,11 +1,11 @@
 import { UserSettings } from '@prisma/client'
 import Layout from 'components/layout/layout'
+import Nav from 'components/layout/nav'
 import safeJsonStringify from 'fast-safe-stringify'
 import moment from 'moment-timezone'
-import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
+import { GetServerSidePropsContext } from 'next'
+import { Session } from 'next-auth'
 import { getServerSession } from 'next-auth/next'
-import { signOut } from 'next-auth/react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { getSettingsForUser } from 'pages/api/user/settings'
@@ -14,7 +14,7 @@ import { Button, Col, Container, Form, Row, Spinner } from 'react-bootstrap'
 import { Typeahead } from 'react-bootstrap-typeahead'
 import 'react-bootstrap-typeahead/css/Typeahead.css'
 
-export default function Home({ session, settings }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home({ session, settings }: { session: Session; settings: UserSettings }) {
     const router = useRouter()
     const refreshData = () => {
         router.replace(router.asPath, undefined, { scroll: false })
@@ -34,20 +34,7 @@ export default function Home({ session, settings }: InferGetServerSidePropsType<
 
     return (
         <Layout>
-            <div>
-                <p>Signed in as {session.user.email}</p>
-                <Button
-                    className="m-1"
-                    onClick={() => signOut({ callbackUrl: `${process.env.NEXT_PUBLIC_URL}/api/auth/logout` })}
-                >
-                    Sign out
-                </Button>
-                <Link href="/habits" passHref>
-                    <Button className="m-1" variant="secondary">
-                        Habits
-                    </Button>
-                </Link>
-            </div>
+            <Nav session={session}></Nav>
             <Container className="mt-3">
                 {error && (
                     <Row className="justify-content-md-center">
