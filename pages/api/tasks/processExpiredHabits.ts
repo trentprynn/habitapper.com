@@ -8,30 +8,31 @@ import { prisma } from 'prisma/client'
  * /api/tasks/processExpiredHabits:
  *   post:
  *     description: Kicks off the process to reset habit streaks that were not continued
- *     tags:
- *       - cron
  *     parameters:
  *       - in: header
- *         name: authorization
+ *         name: cron_key
  *         required: true
- *         description: Bearer token secret to verify caller has access to kick off this process.
+ *         description: Secret to verify caller has access to kick off this process.
  *         schema:
  *           type: string
+ *           example: example_key
+ *     tags:
+ *       - cron
  *     responses:
  *       200:
  *         description: Habit streaks were successfully reset (empty body)
  *       401:
- *         description: No authorization header given in request
+ *         description: No Authorization header given in request
  *       403:
- *         description: Incorrect authorization header given in request
+ *         description: Invalid Authorization header value given in request
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const APP_KEY = process.env.APP_KEY
 
     switch (req.method) {
         case 'POST':
-            if (req.headers.authorization) {
-                const CALLER_PROVIDED_APP_KEY = req.headers.authorization.split(' ')[1]
+            if (req.headers.cron_key) {
+                const CALLER_PROVIDED_APP_KEY = req.headers.cron_key as string
 
                 if (APP_KEY === CALLER_PROVIDED_APP_KEY) {
                     // caller provided valid auth
