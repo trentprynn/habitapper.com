@@ -33,7 +33,7 @@ Repository for the source code of HabiTapper.com
 ## Useful commands during local development
 1. `yarn prisma studio`
     - runs a local website at `localhost:5555` that allows for easy viewing and interaction with the local postgres database the application is using
-2. `curl -I --request POST --url "http://localhost:3000/api/tasks/processExpiredHabits" --header "Authorization: Bearer local_key"`
+2. `curl -I --request POST --url "http://localhost:3000/api/tasks/processExpiredHabits" --header "cron_key: local_key"`
     - sends a HTTP POST request to the API route that resets habit streaks that were not claimed. In production you should setup automatic pinging of this end point so user habit streaks are reset after not being claimed.
 3. `docker run --name pgadmin4 -e PGADMIN_DEFAULT_EMAIL=test@example.com -e PGADMIN_DEFAULT_PASSWORD=your_password -e PGADMIN_LISTEN_PORT=4000 -p 4000:4000 -v pgadmin_data:/var/lib/pgadmin -d dpage/pgadmin4`
     - runs a pgadmin4 container that you can configure to connect to your local (or remote) postgres database, useful if you want to look into your database more deeply then `yarn prisma studio` offers
