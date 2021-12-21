@@ -1,18 +1,34 @@
 import Layout from 'components/layout/layout'
-import Link from 'next/link'
-import { Button } from 'react-bootstrap'
+import Nav from 'components/layout/nav'
+import { GetServerSidePropsContext } from 'next'
+import { getServerSession, Session } from 'next-auth'
+import { authOptions } from 'pages/api/auth/[...nextauth]'
 import SwaggerUI from 'swagger-ui-react'
 import 'swagger-ui-react/swagger-ui.css'
 
-export default function ApiDocs() {
+export default function ApiDocs({ session }: { session: Session }) {
     return (
         <Layout>
-            <Link href="/" passHref>
-                <Button className="m-1" variant="primary">
-                    Back
-                </Button>
-            </Link>
+            <Nav session={session}></Nav>
             <SwaggerUI url={`${process.env.NEXT_PUBLIC_URL}/api/open-api`} />
         </Layout>
     )
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const session = await getServerSession(context, authOptions)
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/',
+                permanent: false,
+            },
+        }
+    }
+
+    return {
+        props: {
+            session,
+        },
+    }
 }
