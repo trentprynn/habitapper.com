@@ -5,7 +5,6 @@ export default function Document() {
         <Html>
             <Head>
                 <meta charSet="utf-8" />
-                <link rel="icon" href="https://habitapper.com/favicon.ico" />
                 <meta name="description" content="feedback loop based habit tracking" />
                 <meta property="og:title" content="HabiTapper" />
                 <meta property="og:image" content="https://habitapper.com/default.png" />
