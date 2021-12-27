@@ -11,10 +11,10 @@ export default function Document() {
                 <meta property="og:description" content="feedback loop based habit tracking" />
                 <link rel="apple-touch-icon" href="https://habitapper.com/logo192.png" />
                 <link rel="manifest" href="https://habitapper.com/manifest.json" />
-                <script async defer src="https://sa.habitapper.com/latest.js"></script>
+                <script async defer data-collect-dnt="true" src="https://sa.habitapper.com/latest.js"></script>
                 <noscript>
-                <img // eslint-disable-line
-                        src="https://sa.habitapper.com/noscript.gif"
+                    <img // eslint-disable-line
+                        src="https://sa.habitapper.com/noscript.gif?collect-dnt=true"
                         alt=""
                         referrerPolicy="no-referrer-when-downgrade"
                     />
