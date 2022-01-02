@@ -6,7 +6,7 @@ import { authOptions } from 'pages/api/auth/[...nextauth]'
 import SwaggerUI from 'swagger-ui-react'
 import 'swagger-ui-react/swagger-ui.css'
 
-export default function ApiDocs({ session }: { session: Session }) {
+export default function ApiDocs({ session }: { session: Session | null }) {
     return (
         <Layout>
             <Nav session={session}></Nav>
@@ -17,14 +17,6 @@ export default function ApiDocs({ session }: { session: Session }) {
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
     const session = await getServerSession(context, authOptions)
-    if (!session) {
-        return {
-            redirect: {
-                destination: '/',
-                permanent: false,
-            },
-        }
-    }
 
     return {
         props: {

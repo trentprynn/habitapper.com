@@ -8,7 +8,13 @@ export default function Nav({ session }: { session: Session | null }) {
     const router = useRouter()
 
     if (session === null) {
-        return <div></div>
+        return (
+            <div>
+                <Link href="/" passHref>
+                    <Button className="m-1">Log In</Button>
+                </Link>
+            </div>
+        )
     }
 
     return (
