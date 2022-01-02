@@ -30,6 +30,8 @@ import { prisma } from 'prisma/client'
  *               $ref: '#/components/schemas/Habit'
  *       400:
  *         description: Habit already claimed or calling user does not have a timezone saved
+ *       401:
+ *         description: No authorization details sent in request
  *       403:
  *         description: Habit does not belong to calling user
  *       404:

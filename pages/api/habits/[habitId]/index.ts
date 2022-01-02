@@ -25,6 +25,8 @@ import { prisma } from 'prisma/client'
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Habit'
+ *       401:
+ *         description: No authorization details sent in request
  *       403:
  *         description: Habit does not belong to calling user
  *       404:
@@ -47,6 +49,8 @@ import { prisma } from 'prisma/client'
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Habit'
+ *       401:
+ *         description: No authorization details sent in request
  *       403:
  *         description: Habit does not belong to calling user
  *       404:

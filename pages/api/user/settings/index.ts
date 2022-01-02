@@ -24,6 +24,8 @@ type UserSettingsModel = {
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/UserSettings'
+ *       401:
+ *         description: No authorization details sent in request
  *       404:
  *         description: Calling user does not have settings saved yet
  *   post:
@@ -51,7 +53,8 @@ type UserSettingsModel = {
  *               $ref: '#/components/schemas/UserSettings'
  *       400:
  *         description: Invalid user settings given in request
- *
+ *       401:
+ *         description: No authorization details sent in request
  *
  * components:
  *   schemas:

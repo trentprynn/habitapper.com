@@ -20,6 +20,8 @@ import { prisma } from 'prisma/client'
  *               type: array
  *               items:
  *                 $ref: '#/components/schemas/Habit'
+ *       401:
+ *         description: No authorization details sent in request
  *   post:
  *     description: Creates a habit for the calling user
  *     tags:
@@ -42,6 +44,8 @@ import { prisma } from 'prisma/client'
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Habit'
+ *       401:
+ *         description: No authorization details sent in request
  *
  * components:
  *   schemas:
