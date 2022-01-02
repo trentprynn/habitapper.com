@@ -11,7 +11,7 @@ export default function ApiDocs({ session }: { session: Session | null }) {
     return (
         <Layout>
             <Nav session={session}></Nav>
-            <Container>
+            <Container className="p-0">
                 <SwaggerUI url={`${process.env.NEXT_PUBLIC_URL}/api/open-api`} />
             </Container>
         </Layout>
