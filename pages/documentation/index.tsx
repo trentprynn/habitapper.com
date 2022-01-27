@@ -1,29 +1,28 @@
 import Layout from 'components/layout/layout'
-import Nav from 'components/layout/nav'
-import { GetServerSidePropsContext } from 'next'
-import { getServerSession, Session } from 'next-auth'
-import { authOptions } from 'pages/api/auth/[...nextauth]'
+import { createSwaggerSpec } from 'next-swagger-doc'
 import { Container } from 'react-bootstrap'
 import SwaggerUI from 'swagger-ui-react'
 import 'swagger-ui-react/swagger-ui.css'
 
-export default function ApiDocs({ session }: { session: Session | null }) {
+export default function ApiDocs({ spec }: { spec: any }) {
     return (
         <Layout>
-            <Nav session={session}></Nav>
-            <Container className="p-0">
-                <SwaggerUI url={`${process.env.NEXT_PUBLIC_URL}/api/open-api`} />
+            <Container>
+                <SwaggerUI spec={spec} />
             </Container>
         </Layout>
     )
 }
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const session = await getServerSession(context, authOptions)
+export async function getStaticProps() {
+    const spec: any = createSwaggerSpec({
+        title: 'HabiTapper API',
+        version: '0.1.0',
+    })
 
     return {
         props: {
-            session,
+            spec,
         },
     }
 }
