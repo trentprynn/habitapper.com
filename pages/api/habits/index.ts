@@ -119,10 +119,19 @@ export async function getHabitsForUser(userId: string): Promise<Habit[]> {
 }
 
 export async function createHabitForUser(userId: string, habitName: string): Promise<Habit> {
-    return await prisma.habit.create({
+    const createdHabit = await prisma.habit.create({
         data: {
             userId: userId,
             name: habitName,
         },
     })
+
+    await prisma.habitActivityLog.create({
+        data: {
+            habitId: createdHabit.habitId,
+            activity: 'created',
+        },
+    })
+
+    return createdHabit
 }

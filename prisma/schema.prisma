@@ -10,25 +10,36 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// USER SETTING TABLES -- 1 -> 0..1 relationship to User table
+// USER SETTING TABLES -- 0..1 -> 1 relationship to User table
 model UserSettings {
-  userId         String   @id @unique
-  timeZone       String
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String   @id @unique
+  timeZone  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// HABIT ACTIVITY LOG TABLES -- 0..N -> 1 relationship to Habit table
+model HabitActivityLog {
+  habitActivityLogId Int      @id @default(autoincrement())
+  habitId            Int
+  activity           String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  habit              Habit    @relation(fields: [habitId], references: [habitId], onDelete: Cascade)
 }
 
 // HABIT TABLES
 model Habit {
-  habitId           Int       @id @default(autoincrement())
+  habitId           Int                @id @default(autoincrement())
   userId            String
   name              String
-  streak            Int       @default(0)
+  streak            Int                @default(0)
   streakContinuedAt DateTime?
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
-  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  habitLogs         HabitActivityLog[]
 }
 
 // NEXT-AUTH TABLES
@@ -62,9 +73,9 @@ model Session {
 }
 
 model User {
-  id            String         @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String?        @unique
+  email         String?       @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]

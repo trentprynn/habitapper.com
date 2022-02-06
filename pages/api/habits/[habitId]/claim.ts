@@ -103,7 +103,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 }
 
 export async function continueHabitStreak(habitId: number): Promise<Habit> {
-    return await prisma.habit.update({
+    const continuedHabit = await prisma.habit.update({
         where: {
             habitId: habitId,
         },
@@ -114,4 +114,13 @@ export async function continueHabitStreak(habitId: number): Promise<Habit> {
             streakContinuedAt: new Date(new Date().toUTCString()),
         },
     })
+
+    await prisma.habitActivityLog.create({
+        data: {
+            habitId: continuedHabit.habitId,
+            activity: 'streak_continued',
+        },
+    })
+
+    return continuedHabit
 }
