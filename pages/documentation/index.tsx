@@ -19,7 +19,7 @@ export async function getStaticProps() {
         definition: {
             openapi: '3.0.0',
             info: {
-                title: 'NextJS Swagger',
+                title: 'HabiTapper API Documentation',
                 version: '0.1.0',
             },
         },
