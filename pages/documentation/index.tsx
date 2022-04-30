@@ -1,10 +1,12 @@
 import Layout from 'components/layout/layout'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { createSwaggerSpec } from 'next-swagger-doc'
+import dynamic from 'next/dynamic'
 import { Container } from 'react-bootstrap'
-import SwaggerUI from 'swagger-ui-react'
 import 'swagger-ui-react/swagger-ui.css'
+const SwaggerUI = dynamic(import('swagger-ui-react'), { ssr: false })
 
-export default function ApiDocs({ spec }: { spec: Record<string, any> }) {
+function ApiDoc({ spec }: InferGetStaticPropsType<typeof getStaticProps>) {
     return (
         <Layout>
             <Container>
@@ -14,8 +16,9 @@ export default function ApiDocs({ spec }: { spec: Record<string, any> }) {
     )
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
     const spec: Record<string, any> = createSwaggerSpec({
+        apiFolder: 'pages/api',
         definition: {
             openapi: '3.0.0',
             info: {
@@ -31,3 +34,5 @@ export async function getStaticProps() {
         },
     }
 }
+
+export default ApiDoc

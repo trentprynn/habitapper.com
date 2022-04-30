@@ -1,7 +1,0 @@
-node_modules
-.next
-
-.gitignore
-tsconfig.json
-yarn.lock
-package.json

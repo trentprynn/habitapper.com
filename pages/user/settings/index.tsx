@@ -57,6 +57,7 @@ export default function Home({ session, settings }: { session: Session; settings
                             <Typeahead
                                 id="timezone-selector"
                                 onChange={(selectedTz) => {
+                                    /* @ts-ignore */
                                     setUserTz(selectedTz)
                                 }}
                                 options={moment.tz.names()}
