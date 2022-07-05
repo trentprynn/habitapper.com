@@ -4,7 +4,9 @@ import { createSwaggerSpec } from 'next-swagger-doc'
 import dynamic from 'next/dynamic'
 import { Container } from 'react-bootstrap'
 import 'swagger-ui-react/swagger-ui.css'
-const SwaggerUI = dynamic(import('swagger-ui-react'), { ssr: false })
+
+// @ts-ignore
+const SwaggerUI = dynamic<{ spec: Record<string, any> }>(import('swagger-ui-react'), { ssr: false })
 
 function ApiDoc({ spec }: InferGetStaticPropsType<typeof getStaticProps>) {
     return (

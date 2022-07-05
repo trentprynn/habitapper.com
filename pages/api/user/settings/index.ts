@@ -2,7 +2,7 @@ import { UserSettings } from '@prisma/client'
 import safeJsonStringify from 'fast-safe-stringify'
 import moment from 'moment-timezone'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getServerSession } from 'next-auth/next'
+import { unstable_getServerSession } from 'next-auth/next'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { prisma } from 'prisma/client'
 
@@ -78,7 +78,7 @@ type UserSettingsModel = {
  *           example: 2021-11-27T20:32:42.402Z
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<UserSettings>) {
-    const session = await getServerSession({ req, res }, authOptions)
+    const session = await unstable_getServerSession(req, res, authOptions)
 
     if (session && session.user && session.user.id) {
         switch (req.method) {
