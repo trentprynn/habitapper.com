@@ -2,7 +2,8 @@ import { Habit, UserSettings } from '@prisma/client'
 import { habitAbleToBeClaimed } from 'common/functions/time'
 import moment from 'moment'
 import { useState } from 'react'
-import { Button, Card, Dropdown, Spinner } from 'react-bootstrap'
+import { Button, Card, Spinner } from 'react-bootstrap'
+import { AiFillDelete } from 'react-icons/ai'
 
 interface onChangeSignature {
     (): void
@@ -21,12 +22,7 @@ const HabitCard = ({ habit, userSettings, habitChanged }: HabitCardProps) => {
     return (
         <Card className="h-100">
             <Card.Header className="text-end">
-                <Dropdown>
-                    <Dropdown.Toggle id="habit-edit-menu" variant="secondary" size="sm"></Dropdown.Toggle>
-                    <Dropdown.Menu renderOnMount={true}>
-                        <Dropdown.Item onClick={async () => deleteHabit(habit.habitId)}>Delete</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
+                <Button variant="danger" size="sm" onClick={async () => deleteHabit(habit.habitId)}><AiFillDelete /></Button>
             </Card.Header>
             <Card.Body className="text-center">
                 <Card.Title>{habit.name}</Card.Title>
