@@ -1,6 +1,6 @@
 import Layout from 'components/layout/layout'
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
-import { getServerSession } from 'next-auth/next'
+import { unstable_getServerSession } from 'next-auth'
 import { signIn } from 'next-auth/react'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { Button } from 'react-bootstrap'
@@ -20,7 +20,7 @@ export default function Home({}: InferGetServerSidePropsType<typeof getServerSid
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const session = await getServerSession(context, authOptions)
+    const session = await unstable_getServerSession(context.req, context.res, authOptions)
 
     if (session) {
         // if the user is already logged in, redirect them to their

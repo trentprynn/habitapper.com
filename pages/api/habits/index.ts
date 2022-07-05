@@ -1,6 +1,6 @@
 import { Habit } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getServerSession } from 'next-auth/next'
+import { unstable_getServerSession } from 'next-auth/next'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { prisma } from 'prisma/client'
 
@@ -82,7 +82,7 @@ import { prisma } from 'prisma/client'
  *           example: 2021-11-27T20:32:42.402Z
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Habit[] | Habit>) {
-    const session = await getServerSession({ req, res }, authOptions)
+    const session = await unstable_getServerSession(req, res, authOptions)
 
     if (session && session.user && session.user.id) {
         switch (req.method) {

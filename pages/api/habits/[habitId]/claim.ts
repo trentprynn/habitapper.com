@@ -1,7 +1,7 @@
 import { Habit, UserSettings } from '@prisma/client'
 import { habitAbleToBeClaimed } from 'common/functions/time'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getServerSession } from 'next-auth/next'
+import { unstable_getServerSession } from 'next-auth/next'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { getHabit } from 'pages/api/habits/[habitId]'
 import { getSettingsForUser } from 'pages/api/user/settings'
@@ -38,7 +38,7 @@ import { prisma } from 'prisma/client'
  *         description: Habit not found
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Habit>) {
-    const session = await getServerSession({ req, res }, authOptions)
+    const session = await unstable_getServerSession(req, res, authOptions)
 
     const habitId = parseInt(req.query.habitId as string, 10)
 

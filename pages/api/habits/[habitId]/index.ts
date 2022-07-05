@@ -1,6 +1,6 @@
 import { Habit } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getServerSession } from 'next-auth/next'
+import { unstable_getServerSession } from 'next-auth/next'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { prisma } from 'prisma/client'
 
@@ -57,7 +57,7 @@ import { prisma } from 'prisma/client'
  *         description: Habit not found
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Habit>) {
-    const session = await getServerSession({ req, res }, authOptions)
+    const session = await unstable_getServerSession(req, res, authOptions)
 
     const habitId = parseInt(req.query.habitId as string, 10)
 

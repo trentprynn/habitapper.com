@@ -5,7 +5,7 @@ import safeJsonStringify from 'fast-safe-stringify'
 import moment from 'moment-timezone'
 import { GetServerSidePropsContext } from 'next'
 import { Session } from 'next-auth'
-import { getServerSession } from 'next-auth/next'
+import { unstable_getServerSession } from 'next-auth/next'
 import { useRouter } from 'next/router'
 import { authOptions } from 'pages/api/auth/[...nextauth]'
 import { getSettingsForUser } from 'pages/api/user/settings'
@@ -120,7 +120,7 @@ export default function Home({ session, settings }: { session: Session; settings
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-    const session = await getServerSession(context, authOptions)
+    const session = await unstable_getServerSession(context.req, context.res, authOptions)
 
     if (!session) {
         return {

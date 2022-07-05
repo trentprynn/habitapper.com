@@ -1,16 +1,12 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
-}
-
-// USER SETTING TABLES -- 0..1 -> 1 relationship to User table
 model UserSettings {
   userId    String   @id @unique
   timeZone  String
@@ -19,7 +15,6 @@ model UserSettings {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// HABIT ACTIVITY LOG TABLES -- 0..N -> 1 relationship to Habit table
 model HabitActivityLog {
   habitActivityLogId Int      @id @default(autoincrement())
   habitId            Int
@@ -29,7 +24,6 @@ model HabitActivityLog {
   habit              Habit    @relation(fields: [habitId], references: [habitId], onDelete: Cascade)
 }
 
-// HABIT TABLES
 model Habit {
   habitId           Int                @id @default(autoincrement())
   userId            String
@@ -42,7 +36,6 @@ model Habit {
   habitLogs         HabitActivityLog[]
 }
 
-// NEXT-AUTH TABLES
 model Account {
   id                 String  @id @default(cuid())
   userId             String
@@ -58,8 +51,7 @@ model Account {
   session_state      String?
   oauth_token_secret String?
   oauth_token        String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -79,8 +71,8 @@ model User {
   emailVerified DateTime?
   image         String?
   accounts      Account[]
-  sessions      Session[]
   habits        Habit[]
+  sessions      Session[]
   UserSettings  UserSettings?
 }
 
