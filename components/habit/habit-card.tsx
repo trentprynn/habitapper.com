@@ -22,7 +22,9 @@ const HabitCard = ({ habit, userSettings, habitChanged }: HabitCardProps) => {
     return (
         <Card className="h-100">
             <Card.Header className="text-end">
-                <Button variant="danger" size="sm" onClick={async () => deleteHabit(habit.habitId)}><AiFillDelete /></Button>
+                <Button variant="danger" size="sm" onClick={async () => deleteHabit(habit.habitId)}>
+                    <AiFillDelete />
+                </Button>
             </Card.Header>
             <Card.Body className="text-center">
                 <Card.Title>{habit.name}</Card.Title>
