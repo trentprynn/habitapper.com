@@ -25,7 +25,7 @@ export default function Layout({ children, title = 'HabiTapper' }: { children: a
                 <a href="https://account.venmo.com/u/TrentPrynn" className="me-2">
                     <IoLogoVenmo />
                 </a>
-                <Link href="/documentation" passHref>
+                <Link href="/api/docs" passHref>
                     <a className="me-2">
                         <AiFillApi />
                     </a>

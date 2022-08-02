@@ -10,32 +10,30 @@
         "lint": "next lint --fix && prettier --write 'pages/' 'components/' > /dev/null"
     },
     "dependencies": {
-        "@next-auth/prisma-adapter": "1.0.3",
-        "@prisma/client": "4.0.0",
-        "bootstrap": "5.2.0-beta1",
+        "@next-auth/prisma-adapter": "1.0.4",
+        "@prisma/client": "4.1.1",
+        "bootstrap": "5.2.0",
         "fast-safe-stringify": "2.1.1",
-        "moment": "2.29.3",
+        "moment": "2.29.4",
         "moment-timezone": "0.5.34",
-        "next": "12.2.0",
-        "next-auth": "4.8.0",
+        "next": "12.2.3",
+        "next-auth": "4.10.3",
         "next-swagger-doc": "0.3.4",
         "react": "18.2.0",
         "react-bootstrap": "2.5.0-beta.0",
         "react-bootstrap-typeahead": "6.0.0-rc.3",
         "react-dom": "18.2.0",
-        "react-icons": "4.4.0",
-        "swagger-ui-react": "4.12.0"
+        "react-icons": "4.4.0"
     },
     "devDependencies": {
-        "@types/node": "18.0.1",
-        "@types/react": "18.0.14",
-        "@types/swagger-ui-react": "4.11.0",
-        "eslint": "8.19.0",
-        "eslint-config-next": "12.2.0",
+        "@types/node": "18.6.3",
+        "@types/react": "18.0.15",
+        "eslint": "8.21.0",
+        "eslint-config-next": "12.2.3",
         "eslint-plugin-prettier": "4.2.1",
         "prettier": "2.7.1",
-        "prettier-plugin-organize-imports": "3.0.0",
-        "prisma": "4.0.0",
+        "prettier-plugin-organize-imports": "3.0.1",
+        "prisma": "4.1.1",
         "typescript": "4.7.4"
     }
 }
