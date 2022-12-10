@@ -26,9 +26,7 @@ export default function Layout({ children, title = 'HabiTapper' }: { children: a
                     <IoLogoVenmo />
                 </a>
                 <Link href="/api/docs" passHref>
-                    <a className="me-2">
-                        <AiFillApi />
-                    </a>
+                    <AiFillApi />
                 </Link>
             </footer>
         </React.Fragment>
