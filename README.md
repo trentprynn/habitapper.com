@@ -40,4 +40,11 @@ Repository for the source code of HabiTapper.com
         - **NOTE**: if you're trying to connect to your local database from pgadmin4 running in a container use the host name `host.docker.internal` instead of `localhost` during initial server connection configuration
 
 ## Deployment
-- On a push to master vercel will pull, build, and deploy the newest version of the code to production
+- On a push to master the website will be deployed automatically by Railway
+- The following commands can be used to locally build and run the Dockerfile that will be deployed
+    - build image: `docker build . -t habitapper.com`
+    - create container: `docker run -d --name habitapper.com --env-file .env -p 3000:3000  habitapper.com`
+    - stop container: `docker stop habitapper.com`
+    - delete container: `docker rm habitapper.com`
+    - delete image: `docker rmi habitapper.com`
+
