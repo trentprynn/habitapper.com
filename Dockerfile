@@ -16,8 +16,8 @@ ARG NEXT_PUBLIC_URL
 ENV NEXT_TELEMETRY_DISABLED 1
 
 WORKDIR /app
-COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
+COPY --from=dependencies /app/node_modules ./node_modules
 
 RUN yarn prisma generate
 RUN yarn prisma migrate deploy
