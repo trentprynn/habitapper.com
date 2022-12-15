@@ -47,4 +47,3 @@ Repository for the source code of HabiTapper.com
     - stop container: `docker stop habitapper.com`
     - delete container: `docker rm habitapper.com`
     - delete image: `docker rmi habitapper.com`
-
