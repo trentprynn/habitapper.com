@@ -8,26 +8,14 @@ Repository for the source code of HabiTapper.com
 1. clone the repository
 2. navigate into it 
 3. use `docker` to spin up a postgres instance for our local application to connect to
-    - `docker run --name habitapper-db -e POSTGRES_USER=habitapper_user -e POSTGRES_PASSWORD=habitapper_pass -e POSTGRES_DB=habitapper -p 5432:5432 -v habitapper_data:/var/lib/postgresql/data -d postgres`
-3. create a `.env` file that defines the following variables
-    - auth0 settings
-        - `AUTH0_CLIENT_ID`
-        - `AUTH0_CLIENT_SECRET`
-        - `AUTH0_ISSUER`
-    - access key for HTTP request authorization that runs CRON like actions (example: resetting user streak counts that have not been claimed)
-        - `APP_KEY=local_key`
-    - next auth redirect url
-        - `NEXTAUTH_URL=http://localhost:3000`
-        - `NEXTAUTH_SECRET=LOCAL_SECRET_FOR_DEVELOPMENT`
-    - public url
-        - `NEXT_PUBLIC_URL=http://localhost:3000`
-    - prisma (JavaScript ORM) db connection string
-        - `DATABASE_URL=postgresql://habitapper_user:habitapper_pass@localhost:5432/habitapper`
+    - `docker run --name habitapper-db -e POSTGRES_USER=habitapper-user -e POSTGRES_PASSWORD=habitapper-pass -e POSTGRES_DB=habitapper -p 5432:5432 -v habitapper-data:/var/lib/postgresql/data -d postgres`
+4. Create a `.env` file the defines the required runtime variables
+    - `cp .env.sample .env`
 5. run `yarn`
     - installs dependencies
-5. run `yarn prisma migrate dev`
+6. run `yarn prisma migrate dev`
     - runs db migrations
-6. run `yarn dev`
+7. run `yarn dev`
     - runs application with hot reloading enabled
 
 ## Useful commands during local development
